@@ -1,0 +1,54 @@
+﻿@model FinalProRere.ViewModels.MultipleTicketsModel
+
+@{
+    ViewBag.Title = "ViewTicket";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div>
+    <table class="table table-bordered table-hover" border="1">
+        <thead>
+            <tr>
+                <th>TICKET TRACKING NUMBER: @Model.Ticket.Id</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr><td>Ticket Resolved: @Model.Ticket.Resolved <form method="post" action="/Home/ViewTicket">
+                                                                <select name="Resolved" onchange="this.form.submit()">
+                                                                    <option disabled selected> -- select an option -- </option>                                                                    
+                                                                    <option value="true">Resolve</option>
+                                                                    <option value="false">Unresolve</option>
+                                                                </select>
+                   <input type="hidden" name="ticketId" value="@Model.Ticket.Id"/>
+</form></td></tr>
+            <tr><td>Assigned To: @Model.Ticket.ApplicationUser.UserName</td></tr>
+            <tr><td><b></b>Instructions:@Model.Ticket.Instructions</td></tr>
+        </tbody>
+
+    </table>
+    
+</div>
+
+<table class="table table-bordered table-hover">
+    <thead>
+        <tr>
+            <th>Comments</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var comment in Model.Comments)
+        {
+            <tr>
+                <td>
+                   UserName: @comment.ApplicationUser.UserName  <br />
+                   Comment: @comment.textBox
+                </td>
+
+            </tr>
+        }
+
+    </tbody>
+
+
+</table>
+<button class="btn btn-primary">@Html.ActionLink("New Comment", "NewCommentView", new { id = Model.Ticket.Id }) </button>

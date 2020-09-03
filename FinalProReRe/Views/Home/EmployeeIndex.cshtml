@@ -1,0 +1,52 @@
+﻿@model FinalProRere.ViewModels.MultipleTicketsModel
+
+
+@{
+    var ticket_resolved = "";
+    ViewBag.Title = "Home Page";
+
+}
+
+<table id="tickets" class="table table-bordered table-hover" border="1">
+    <thead>
+        <tr>
+            <th>Ticket ID</th>
+            <th>Date Created</th>
+            <th>Instructions</th>
+            <th>Resolved</th>
+            <th>Assigned To</th>
+        </tr>
+    </thead>
+    <tbody>
+
+        @foreach (var tickets in Model.Tickets)
+        {
+            var user = tickets.ApplicationUser.UserName;
+
+            if (tickets.Resolved == true)
+            {
+                ticket_resolved = "Complete";
+            }
+            else
+            {
+                ticket_resolved = "Not Complete";
+            }
+            <tr>
+                <td>@Html.ActionLink(tickets.Id.ToString(), "ViewTicket", new { ticketId = tickets.Id })</td>
+                <td>@tickets.Date</td>
+                <td>@tickets.Instructions</td>
+                <td>@ticket_resolved </td>
+                <td>@tickets.ApplicationUser.UserName</td>
+            
+
+            </tr>
+        }
+    </tbody>
+</table>
+
+@section scripts
+{
+}
+
+@Scripts.Render("~/bundles/jquery")
+@Scripts.Render("~/bundles/bootstrap")

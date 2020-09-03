@@ -1,0 +1,26 @@
+﻿@model FinalProRere.ViewModels.MultipleTicketsModel
+
+@{
+    ViewBag.Title = "NewCommentView";
+}
+
+<h2>NewCommentView</h2>
+
+@Html.BeginForm("ViewTicket", "Home", FormMethod.Post) {
+
+
+
+
+<input type="hidden" name="ticketId" value="@Model.Ticket.Id.ToString()"/>
+
+
+Comment:
+<textarea name="commentTextBox"> </textarea>"
+
+
+<div class="form-group">
+    <button action="submit" class="btn btn-primary">Submit</button>
+
+</div>
+}
+
