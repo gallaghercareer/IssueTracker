@@ -117,3 +117,10 @@ C:\Users\JP\source\repos\FinalProReRe\obj\Debug\FinalProReRe.Migrations.updateCo
 C:\Users\JP\source\repos\FinalProReRe\obj\Debug\FinalProReRe.csprojAssemblyReference.cache
 C:\Users\JP\source\repos\FinalProReRe\obj\Debug\FinalProReRe.Migrations.updatecomments.resources
 C:\Users\JP\source\repos\FinalProReRe\obj\Debug\FinalProReRe.Migrations.removeRow.resources
+C:\Users\JP\source\repos\FinalProReRe\bin\System.Net.Http.Formatting.dll
+C:\Users\JP\source\repos\FinalProReRe\bin\System.Web.Http.dll
+C:\Users\JP\source\repos\FinalProReRe\bin\System.Web.Http.WebHost.dll
+C:\Users\JP\source\repos\FinalProReRe\bin\System.Net.Http.Formatting.xml
+C:\Users\JP\source\repos\FinalProReRe\bin\System.Web.Http.xml
+C:\Users\JP\source\repos\FinalProReRe\bin\System.Web.Http.WebHost.xml
+C:\Users\JP\source\repos\FinalProReRe\obj\Debug\FinalProReRe.Migrations.jquery.resources

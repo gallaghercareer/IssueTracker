@@ -1,51 +1,106 @@
 ﻿@model FinalProRere.ViewModels.MultipleTicketsModel
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Issue Tracker</title>
+</head>
+@Styles.Render("~/Content/css")
+
+   
+
+<body class="mainbody">
+    <div id="heading"> 
+        <a href="_targetblank">Home</a> <a href="_targetblank">Contact Me</a> <a href="_targetblank">Portfolio</a>
+    </div>
+    <div id="buttonadd">
+        <a id="buttonlink" class="btn" href='@Url.Action("AddTicketForm", "Home")'> Add Ticket</a>
+    </div>
+    <div id="tablediv">
+        <!---->
+        <table id="tickets" class="stripe table table-bordered table-hover" border="1">
+            <thead>
+                <tr>
+                    <th>Ticket ID</th>
+                    <th>AssignedTo</th>
+                    <th>Date Created</th>
+                    <th>Resolved</th>
+                        
+                   
+                </tr>
+            </thead>
+        </table>
+    </div>
+
+</body>
 
 
-@{
-    var ticket_resolved = "";
-    ViewBag.Title = "Home Page";
 
-}
 
-<table id="tickets" class="table table-bordered table-hover" border="1">
-    <thead>
-        <tr>
-            <th>Ticket ID</th>
-            <th>Date Created</th>
-            <th>Instructions</th>
-            <th>Resolved</th>
-            <th>Assigned To</th>
-        </tr>
-    </thead>
-    <tbody>
-
-        @foreach (var tickets in Model.Tickets)
-        {
-            var user = tickets.ApplicationUser.UserName;
-
-            if (tickets.Resolved == true)
-            {
-                ticket_resolved = "Complete";
-            }
-            else
-            {
-                ticket_resolved = "Not Complete";
-            }
-            <tr>
-                <td>@Html.ActionLink(tickets.Id.ToString(), "ViewTicket", new { ticketId = tickets.Id })</td>
-                <td>@tickets.Date</td>
-                <td>@tickets.Instructions</td>
-                <td>@ticket_resolved </td>
-                <td>@tickets.ApplicationUser.UserName</td>
-                <td>@Html.ActionLink("Delete", "DeleteTicket", new { ticketId = tickets.Id })</td>
-
-            </tr>
-        }
-    </tbody>
-</table>
-
-<button> @Html.ActionLink("Add Ticket", "AddTicketForm", "Home") </button>
+</html>
 
 
 @Scripts.Render("~/bundles/jquery")
 @Scripts.Render("~/bundles/bootstrap")
+
+<script>
+    $(document).ready(function () {
+
+      
+
+    window.addEventListener('load', loadData());
+
+
+   
+    function loadData() {
+        const xhr = new XMLHttpRequest();
+
+        xhr.open('GET', '/api/tickets');
+
+        xhr.onload = function () {
+
+            var ticket = JSON.parse(this.response);
+
+            $('#tickets').DataTable({
+                data: ticket,
+                paging: false,
+                "columns": [
+                    {
+                        "data": "id",
+                     
+                        "render": function (data, type, ticket) {
+                            
+                            var myUrl = '@Url.Action("Viewticket", "Home")?ticketid='+data;
+                            return '<a href=\"' + myUrl + '\">'+data+'</a>';
+                        }
+                    },
+                    {
+                        "data": "applicationUser.userName",
+                        
+                    },
+                    {
+                        "data": "date",
+                       
+                    },
+                    {
+                        "data": "resolved",
+                      
+                    }
+                  
+                  
+                 
+                ]
+            });
+        }
+
+        xhr.send();
+    };
+
+ 
+    });
+</script>
+
+
+
+

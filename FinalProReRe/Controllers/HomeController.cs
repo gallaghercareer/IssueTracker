@@ -1,6 +1,7 @@
 ﻿using FinalProRere.ViewModels;
 using FinalProReRe.Models;
 using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security.Provider;
 using System;
 using System.Collections.Generic;
@@ -8,6 +9,7 @@ using System.Data.Entity;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Routing;
 
 namespace FinalProReRe.Controllers
 {
@@ -103,16 +105,18 @@ namespace FinalProReRe.Controllers
                 _context.SaveChanges();
             };
 
-            //create new ticket if it's recieved
+            //create new comment if it's recieved
             if (commentTextBox != null)
             {
+
+               // var name = User.Identity.GetUserName();
+
                 Comment comment = new Comment()
                 {
                     textBox = commentTextBox,
                     TicketId = ticketId,
-                    ApplicationUserId = User.Identity.GetUserId() 
-                    
-                };
+                   
+            };
                 
                 _context.Comments.Add(comment);
                 _context.SaveChanges();
