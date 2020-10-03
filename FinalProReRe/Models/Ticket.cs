@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
@@ -18,7 +19,8 @@ namespace FinalProReRe.Models
         public DateTime Date { get; set; }
 
         public bool Resolved { get; set; }
-
+        
+        [Required]
         public string Instructions { get; set; }
        
 

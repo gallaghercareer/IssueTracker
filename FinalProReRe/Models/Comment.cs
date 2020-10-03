@@ -22,5 +22,7 @@ namespace FinalProReRe.Models
         public int TicketId { get; set; }
 
         public string textBox { get; set; }
+
+        public string name { get; set; }
     }
 }

@@ -52,6 +52,21 @@
     <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>packages\EntityFramework.6.4.4\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
+    <Reference Include="Glimpse.Ado, Version=1.7.3.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>packages\Glimpse.Ado.1.7.3\lib\net45\Glimpse.Ado.dll</HintPath>
+    </Reference>
+    <Reference Include="Glimpse.AspNet, Version=1.8.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>packages\Glimpse.AspNet.1.8.0\lib\net45\Glimpse.AspNet.dll</HintPath>
+    </Reference>
+    <Reference Include="Glimpse.Core, Version=1.8.6.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>packages\Glimpse.1.8.6\lib\net45\Glimpse.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Glimpse.EF6, Version=1.6.5.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>packages\Glimpse.EF6.1.6.5\lib\net45\Glimpse.EF6.dll</HintPath>
+    </Reference>
+    <Reference Include="Glimpse.Mvc5, Version=1.5.3.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>packages\Glimpse.Mvc5.1.5.3\lib\net45\Glimpse.Mvc5.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -182,6 +197,7 @@
     <Compile Include="Controllers\Api\TicketsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="GlimpseSecurityPolicy.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -228,6 +244,18 @@
     <Compile Include="Migrations\202009082204422_jquery.cs" />
     <Compile Include="Migrations\202009082204422_jquery.designer.cs">
       <DependentUpon>202009082204422_jquery.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202009260401454_update.cs" />
+    <Compile Include="Migrations\202009260401454_update.designer.cs">
+      <DependentUpon>202009260401454_update.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202010010152023_upde.cs" />
+    <Compile Include="Migrations\202010010152023_upde.designer.cs">
+      <DependentUpon>202010010152023_upde.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202010021455391_canmanageticketrole.cs" />
+    <Compile Include="Migrations\202010021455391_canmanageticketrole.designer.cs">
+      <DependentUpon>202010021455391_canmanageticketrole.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -537,6 +565,7 @@
     <Content Include="Views\Home\ViewTicket.cshtml" />
     <Content Include="Views\Home\NewCommentView.cshtml" />
     <Content Include="Views\Home\EmployeeIndex.cshtml" />
+    <Content Include="Views\Shared\NavBar.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -587,6 +616,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202009082204422_jquery.resx">
       <DependentUpon>202009082204422_jquery.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202009260401454_update.resx">
+      <DependentUpon>202009260401454_update.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202010010152023_upde.resx">
+      <DependentUpon>202010010152023_upde.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202010021455391_canmanageticketrole.resx">
+      <DependentUpon>202010021455391_canmanageticketrole.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

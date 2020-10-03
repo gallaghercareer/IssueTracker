@@ -10,23 +10,25 @@
 </head>
 <body>
     <div id="heading">
-        <a href="/home/index">Home</a> <a href="_targetblank">Contact Me</a> <a href="_targetblank">Portfolio</a>
+        <a href="/home/index">Home</a> <a href="_targetblank">Contact Me</a> <a href="_targetblank">Portfolio</a>@Html.Partial("_LoginPartial")
     </div>
-   
-    <h2>Comment</h2>
-   
-    @using (@Html.BeginForm("ViewTicket", "Home", FormMethod.Post)) {
-    
 
-    <label for="commentTextBox"></label>
-    <textarea rows="10" columns="40" name="commentTextBox"> </textarea>
 
-    
-        <button action="submit" class="btn btn-primary" style="display:block;">Submit</button>
- 
+
+    @using (@Html.BeginForm("ViewTicket", "Home", FormMethod.Post, new { style = "width:50%; margin:auto;" }))
+    {
+
+        <h2>Comment</h2>
+        <label for="commentTextBox"></label>
+        <textarea  rows="10" style="width: 500px;" name="commentTextBox"> </textarea>
+
+
+        <button action="submit" class="btn btn-primary" style="display:block; margin-top: 5px;">Submit</button>
+
         <input type="hidden" name="ticketId" value="@Model.Ticket.Id" />
 
-    
-        }
+
+    }
+
 </body>
 </html>

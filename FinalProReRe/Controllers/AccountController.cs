@@ -9,6 +9,7 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using FinalProReRe.Models;
+using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace FinalProReRe.Controllers
 {
@@ -57,6 +58,7 @@ namespace FinalProReRe.Controllers
         [AllowAnonymous]
         public ActionResult Login(string returnUrl)
         {
+            ViewBag.error = "Login as Admin for full privileges, or Employee for restricted privileges";
             ViewBag.ReturnUrl = returnUrl;
             return View();
         }
@@ -70,6 +72,7 @@ namespace FinalProReRe.Controllers
         {
             if (!ModelState.IsValid)
             {
+               
                 return View(model);
             }
 
@@ -79,7 +82,7 @@ namespace FinalProReRe.Controllers
             switch (result)
             {
                 case SignInStatus.Success:
-                    return RedirectToLocal(returnUrl);
+                    return RedirectToAction("EmployeeIndex","Home");
                 case SignInStatus.LockedOut:
                     return View("Lockout");
                 case SignInStatus.RequiresVerification:
@@ -155,6 +158,12 @@ namespace FinalProReRe.Controllers
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
+
+                    //tempcode
+                    var roleStore = new RoleStore<IdentityRole>(new ApplicationDbContext());
+                    var roleManager = new RoleManager<IdentityRole>(roleStore);
+                    await roleManager.CreateAsync(new IdentityRole("CanManageTickets"));
+                    await UserManager.AddToRoleAsync(user.Id, "CanManageTickets");
                     await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
                     
                     // For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=320771

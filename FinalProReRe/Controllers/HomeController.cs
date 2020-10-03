@@ -10,19 +10,21 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
-
+using System.Web.UI;
+using Microsoft.Owin.Security;
 namespace FinalProReRe.Controllers
 {
+    [Authorize]
     public class HomeController : Controller
     {
 
         private ApplicationDbContext _context;
 
+      
         public HomeController()
         {
             _context = new ApplicationDbContext();
         }
-
         protected override void Dispose(bool disposing)
         {
             _context.Dispose();
@@ -31,17 +33,13 @@ namespace FinalProReRe.Controllers
         public ActionResult Index()
         {
 
-            var tickets = _context.Tickets.ToList();
+         
 
-            var viewModel = new MultipleTicketsModel()
-            {
-                Tickets = tickets
-
-            };
-
-            return View(viewModel);
+            return View();
         }
 
+        
+      
         public ActionResult EmployeeIndex()
         {
             var tickets = _context.Tickets.ToList();
@@ -54,18 +52,36 @@ namespace FinalProReRe.Controllers
             return View(viewModel);
         }
 
+        [Authorize(Roles="CanManageTickets")]
         [HttpPost]
         public ActionResult AddTicket(Ticket ticket)
         {
-
+            if (ModelState.IsValid) { 
             ticket.Date = DateTime.Now;
 
             _context.Tickets.Add(ticket);
             _context.SaveChanges();
 
             return RedirectToAction("Index");
-        }
+            }
+            else
+            {
+                IEnumerable<SelectListItem> users = _context.Users.Select(n =>
+            new SelectListItem
+            {
+                Value = n.Id,
+                Text = n.UserName
+            }).ToList();
 
+                var viewModel = new AddTicketViewModel
+                {
+                    ApplicationUsers = users,
+                    Ticket = ticket
+                };
+                return View("AddTicketForm", viewModel);
+            }
+        }
+        [Authorize(Roles ="CanManageTickets")]
         public ActionResult AddTicketForm()
         {
             IEnumerable<SelectListItem> users = _context.Users.Select(n =>
@@ -85,7 +101,7 @@ namespace FinalProReRe.Controllers
         }
 
         
-        public ActionResult ViewTicket(int ticketId, string commentTextBox, string Resolved)
+        public ActionResult ViewTicket(int ticketId, string commentTextBox, string Resolved, string Username)
         {
 
             //resolve ticket 
@@ -100,28 +116,31 @@ namespace FinalProReRe.Controllers
             if (Resolved == "false")
             {
                 var resolved_ticket = _context.Tickets.Single(t => t.Id == ticketId);
-
+                
                 resolved_ticket.Resolved = false;
                 _context.SaveChanges();
             };
-
-            //create new comment if it's recieved
+          
+            
+           // create new comment if it's recieved
             if (commentTextBox != null)
             {
 
-               // var name = User.Identity.GetUserName();
+                var username = User.Identity.GetUserName();
+
 
                 Comment comment = new Comment()
                 {
                     textBox = commentTextBox,
                     TicketId = ticketId,
-                   
+                    name = username
+
             };
                 
                 _context.Comments.Add(comment);
                 _context.SaveChanges();
             };
-
+           
             //contains ticket Id
             var view_ticket = _context.Tickets.Single(t => t.Id == ticketId);
 
@@ -153,7 +172,7 @@ namespace FinalProReRe.Controllers
             };
             return View(viewModel);
         }
-        
+        [Authorize(Roles ="CanManageTickets")]
         public ActionResult DeleteTicket(int ticketId)
         {
             var ticket = _context.Tickets.Single(t => t.Id == ticketId);
@@ -166,19 +185,7 @@ namespace FinalProReRe.Controllers
         }
 
        
-        public ActionResult About()
-        {
-            ViewBag.Message = "Your application description page.";
-
-            return View();
-        }
-
-        public ActionResult Contact()
-        {
-            ViewBag.Message = "Your contact page.";
-
-            return View();
-        }
+    
 
     }
 }
